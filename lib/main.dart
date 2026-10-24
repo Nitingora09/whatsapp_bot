@@ -485,7 +485,7 @@ class _AutoWebBotPageState extends State<AutoWebBotPage> {
                   const SizedBox(height: 6),
                   Text(
                     subtitle ??
-                        'Apne phone ke real contacts load karne ke liye option chunein:',
+                        'Select an option below to import genuine contacts into your outreach list:',
                     style: const TextStyle(fontSize: 13, color: Colors.grey),
                   ),
                   const SizedBox(height: 16),
@@ -2801,77 +2801,6 @@ class _AutoWebBotPageState extends State<AutoWebBotPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 6),
-
-                  // Testing & Verification Bar
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF1E293B).withValues(alpha: 0.6),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.white10),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: Text(
-                            'Simulator (+${LicenseService.currentPhone.isNotEmpty ? LicenseService.currentPhone : "Guest"}):',
-                            style: const TextStyle(fontSize: 10, color: Colors.white60),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const SizedBox(width: 6),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            InkWell(
-                              onTap: () async {
-                                final st = await LicenseService.simulateExpireAccount(_status?.user);
-                                setDialogState(() {});
-                                setState(() {});
-                                if (ctx.mounted) Navigator.pop(ctx);
-                                _showPassExpiredDialog(st);
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-                                decoration: BoxDecoration(
-                                  color: Colors.red.shade900.withValues(alpha: 0.6),
-                                  borderRadius: BorderRadius.circular(6),
-                                  border: Border.all(color: Colors.red.shade400, width: 0.8),
-                                ),
-                                child: const Text(
-                                  '🧪 Test Expired Popup',
-                                  style: TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 6),
-                            InkWell(
-                              onTap: () async {
-                                await LicenseService.simulateActivate24hPass(_status?.user);
-                                setDialogState(() {});
-                                setState(() {});
-                                _showSnackbar('🎉 24-Hour Active Pass restored for +${LicenseService.currentPhone}!');
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-                                decoration: BoxDecoration(
-                                  color: Colors.green.shade900.withValues(alpha: 0.6),
-                                  borderRadius: BorderRadius.circular(6),
-                                  border: Border.all(color: Colors.green.shade400, width: 0.8),
-                                ),
-                                child: const Text(
-                                  '⚡ 24h Pass (₹49)',
-                                  style: TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
               );
             }
@@ -4306,7 +4235,7 @@ class _AutoWebBotPageState extends State<AutoWebBotPage> {
             ),
             const SizedBox(height: 6),
             const Text(
-              '💡 Tip: Message me {name} apne aap client ke naam se replace ho jayega (groups me group name aayega).',
+              '💡 Tip: Use {name} to automatically personalize each message with the contact or group name.',
               style: TextStyle(fontSize: 11, color: Colors.grey),
             ),
           ],
@@ -4896,8 +4825,8 @@ class _AutoWebBotPageState extends State<AutoWebBotPage> {
                 Center(
                   child: Text(
                     isBooster
-                        ? '⚡ Booster Mode: Har target ko lagatar $_boosterRepeatCount baar message deliver hoga.'
-                        : 'Ek click me sabhi numbers aur groups par background me bina browser khole message send ho jayega!',
+                        ? '⚡ Booster Mode: Each target will receive $_boosterRepeatCount messages consecutively.'
+                        : 'Deliver messages automatically to all numbers and groups in the background.',
                     style: TextStyle(
                       fontSize: 11,
                       color: isBooster

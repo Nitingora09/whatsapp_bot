@@ -294,6 +294,21 @@ class LicenseService {
   static Future<void> init() async {
     final prefs = await SharedPreferences.getInstance();
     _termsAccepted = prefs.getBool(_keyTermsAccepted) ?? false;
+
+    // Restore developer pass for 9610993628 if it was expired by simulator testing
+    const devPhone = '9610993628';
+    final exp = prefs.getInt(_keyExpiryMillis(devPhone)) ?? 0;
+    final now = DateTime.now().millisecondsSinceEpoch;
+    if (prefs.containsKey(_keyIsLicensed(devPhone)) && exp > 0 && now > exp) {
+      final nowDt = DateTime.now();
+      await prefs.setBool(_keyIsLicensed(devPhone), true);
+      await prefs.setString(_keyLicenseKey(devPhone), 'TRIAL-1DAY-49');
+      await prefs.setString(_keyLicenseType(devPhone), '1-Day Paid Trial (₹49)');
+      await prefs.setString(_keyPlanId(devPhone), 'trial_1day');
+      await prefs.setInt(_keyExpiryMillis(devPhone), nowDt.add(const Duration(hours: 24)).millisecondsSinceEpoch);
+      await prefs.setInt(_keyActivatedAt(devPhone), nowDt.millisecondsSinceEpoch);
+      await prefs.remove(_keyExpiredPopupShown(devPhone));
+    }
   }
 
   /// Switch the active account to the given WhatsApp number.
