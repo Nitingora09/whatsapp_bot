@@ -31,41 +31,60 @@ class AdService {
   static int _currentAdIndex = 0;
 
   static const List<SponsoredAd> sponsorAds = [
+    // 1. High-Commission Affiliate (Earns ₹1,500 - ₹2,500 per sale)
+    SponsoredAd(
+      id: 'ad_hosting_deal',
+      badge: 'SPECIAL DEAL ⚡ 75% OFF',
+      title: 'Business Website & Free .COM Domain',
+      subtitle: 'High-Speed Web Hosting + Free SSL + Free Professional Email',
+      description:
+          'Get 75% OFF + Free Domain! Perfect for launching your business portfolio, landing page, or online shop. 30-Day Money-Back Guarantee.',
+      ctaText: 'Claim 75% Off + Free Domain 🚀',
+      targetUrl: 'https://www.hostinger.in/business-web-hosting',
+      icon: Icons.language_rounded,
+      gradientColors: [Color(0xFF1E1B4B), Color(0xFF4338CA), Color(0xFF6366F1)],
+    ),
+    // 2. Direct UPI Cash Product (Earns ₹499 directly to user's UPI)
     SponsoredAd(
       id: 'ad_b2b_leads',
-      badge: 'SPONSORED PARTNER ⚡',
-      title: 'B2B Business Leads & Data Extractor',
-      subtitle: 'Extract 50,000+ verified direct client numbers from Google Maps & Web',
+      badge: 'HOT SELLER 🔥 50,000+ LEADS',
+      title: 'Pan-India Verified Business Leads Pack',
+      subtitle: 'Direct WhatsApp Contacts of Shopkeepers, Realtors, Doctors & Dealers',
       description:
-          'Get fresh, targeted local business leads categorized by city and niche. Perfect for high-speed WhatsApp marketing.',
-      ctaText: 'Explore Leads Pack (50% Off)',
-      targetUrl: 'https://wa.me/919610993628?text=Hello!%20I%20want%20details%20about%20B2B%20Leads%20Extractor',
-      icon: Icons.travel_explore_rounded,
-      gradientColors: [Color(0xFF1E3A8A), Color(0xFF2563EB), Color(0xFF38BDF8)],
+          'Never run out of client numbers! Fresh database categorized by city and industry for high-conversion WhatsApp broadcasts.',
+      ctaText: 'Get 50,000 Leads on WhatsApp (₹499) 📱',
+      targetUrl:
+          'https://wa.me/919610993628?text=Hi%20Natish!%20I%20want%20to%20buy%20the%2050000%20Verified%20Business%20Leads%20Pack%20(Rs.499)',
+      icon: Icons.groups_rounded,
+      gradientColors: [Color(0xFF064E3B), Color(0xFF059669), Color(0xFF10B981)],
     ),
+    // 3. In-App Pass Sale (Earns ₹49 / ₹299 / ₹999 directly into user's account)
     SponsoredAd(
-      id: 'ad_marketing_suite',
-      badge: 'FEATURED TOOL 🔥',
-      title: 'AI Auto-Responder & Chatbot Pro',
-      subtitle: 'Automatically reply to customer inquiries 24/7 with ChatGPT intelligence',
+      id: 'ad_pro_pass',
+      badge: 'GO PRO PASS 👑 AD-FREE',
+      title: 'Remove All Ads & Unlock 100x Multi-Round',
+      subtitle: 'Lightning-fast zero-wait outreach with priority broadcast queue',
       description:
-          'Never lose a lead again. Connect AI auto-reply bot to your WhatsApp account for instantaneous sales closing.',
-      ctaText: 'Get AI Bot Access',
-      targetUrl: 'https://wa.me/919610993628?text=Hello!%20Tell%20me%20about%20AI%20Chatbot%20Pro',
+          'Never wait for countdowns again! Test drive the 24-Hour Pass for only ₹49 or get 30-Day Pro for ₹299.',
+      ctaText: '⚡ Remove Ads & Upgrade (₹49) ⚡',
+      targetUrl:
+          'https://wa.me/919610993628?text=Hello%20Natish!%20I%20want%20to%20upgrade%20to%20Pro%20Ad-Free%20Pass',
+      icon: Icons.workspace_premium_rounded,
+      gradientColors: [Color(0xFF78350F), Color(0xFFD97706), Color(0xFFF59E0B)],
+    ),
+    // 4. High-Ticket Agency Deal (Earns ₹4,999 direct client development deal)
+    SponsoredAd(
+      id: 'ad_ai_chatbot',
+      badge: 'AI POWERED 🤖 24/7 CLOSING',
+      title: 'Custom AI Chatbot & Auto-Responder Pro',
+      subtitle: 'Automatically reply to customer inquiries and close orders on WhatsApp',
+      description:
+          'Connect ChatGPT intelligence to your WhatsApp business. Never lose a valuable customer inquiry while asleep!',
+      ctaText: 'Get Custom AI Bot Setup 💬',
+      targetUrl:
+          'https://wa.me/919610993628?text=Hi%20Natish!%20Tell%20me%20about%20Custom%20AI%20Chatbot%20Pro%20setup',
       icon: Icons.smart_toy_rounded,
       gradientColors: [Color(0xFF4C1D95), Color(0xFF7C3AED), Color(0xFFA855F7)],
-    ),
-    SponsoredAd(
-      id: 'ad_bulk_sms',
-      badge: 'TRENDING SOLUTION ⭐',
-      title: 'Pan-India Fast SMS & OTP Gateway',
-      subtitle: 'Deliver bulk SMS to DND numbers with 99.9% uptime delivery report',
-      description:
-          'Backup gateway for high-priority business alerts, transaction updates, and offline client outreach.',
-      ctaText: 'Claim Free SMS Credits',
-      targetUrl: 'https://wa.me/919610993628?text=Hello!%20Interested%20in%20Bulk%20SMS%20Gateway',
-      icon: Icons.send_and_archive_rounded,
-      gradientColors: [Color(0xFF064E3B), Color(0xFF059669), Color(0xFF34D399)],
     ),
   ];
 
@@ -299,6 +318,12 @@ class AdService {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
                   onPressed: () async {
+                    if (ad.id == 'ad_pro_pass') {
+                      timer?.cancel();
+                      Navigator.pop(ctx, false);
+                      if (onUpgradePro != null) onUpgradePro();
+                      return;
+                    }
                     final uri = Uri.parse(ad.targetUrl);
                     if (await canLaunchUrl(uri)) {
                       await launchUrl(uri, mode: LaunchMode.externalApplication);
