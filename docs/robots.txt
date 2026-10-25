@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemap for Google, Bing, and Search Engines
-Sitemap: https://whatsappoutreach.github.io/sitemap.xml
+Sitemap: https://nitingora09.github.io/whatsapp_bot/sitemap.xml
